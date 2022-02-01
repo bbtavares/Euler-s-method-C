@@ -1,0 +1,55 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+ 
+double y(double x)
+{ 
+  //a solução y(t) da equação
+  return 0.0;
+}
+ 
+double f(double x,double y)
+{ 
+  //a função f(x,y)
+  return 1.0-3.0*y;
+}
+ 
+double z(double x)
+{
+  //solução do PVI
+  return (1.0/3.0)-(exp(-3.0*x)/3.0);
+}
+
+int main(void)
+{
+  double xn,xn1,xmax; //variáveis x_n e x_(n+1)
+  double yn, yn1; //variáveis y_n e y_(n+1)
+  double y0,x0; //valores iniciais de y e x
+  double h; //passo
+  double erro; //erro da solução
+  int i;
+  
+  x0 = 0.0;
+  y0 = 0.0;
+  xmax = 2.0;
+  h = 0.4;
+  xn = x0;
+  yn = y0;
+  i = 0.0;
+  
+  while(xn<xmax)
+  {
+    printf("\ni = %i\nx_%i = %f, h = %f, y_%i = %f e f(x,y) = %f\n", i,i,xn,h,i,yn, f(xn,yn)); //escreve os valores das variáveis
+    printf("y_%i = %f+%f*%f\n",i+1,yn,h,f(xn,yn));
+    yn1 = yn + h*f(xn,yn);
+    printf("y_%i = %.10f\n\n", i+1,yn1);//escreve a aproximação
+    xn1 = xn + h;
+    i++; //incrementa i
+    yn = yn1; //atribui y_(n1) a y_n pra ser reutilizado
+    xn = xn1; //atribui o x_(n1) a x_n pra ser reutilizado
+  }
+  printf("Erro = |%f - %f|\n", z(xn),yn);
+  erro = fabs(z(xn)-yn);
+  printf("O erro cometido é de: %.10f.", erro);
+  return 0;
+}
